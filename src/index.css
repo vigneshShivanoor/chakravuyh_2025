@@ -1,0 +1,546 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Spectral:wght@400;500;600;700&display=swap');
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes warriorEntry {
+  0% { 
+    transform: translate(150px, 0) rotate(0deg);
+  }
+  100% { 
+    transform: translate(0, 0) rotate(720deg);
+  }
+}
+
+@keyframes pulseWarrior {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes particle {
+  0% {
+    transform: scale(0) translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5) translate(20px, -20px);
+    opacity: 0;
+  }
+}
+
+@layer base {
+  html {
+    font-family: 'Spectral', serif;
+    background: #0a0a0a;
+    scroll-behavior: smooth;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel Decorative', serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply relative flex items-center justify-center gap-2 px-8 py-3 
+           bg-gradient-to-r from-saffron via-gold to-saffron 
+           text-darkBrown font-bold rounded-lg overflow-hidden
+           hover:bg-gradient-to-r hover:from-gold hover:via-saffron hover:to-gold 
+           transition-all duration-500
+           transform hover:-translate-y-0.5 hover:scale-105
+           focus:outline-none focus:ring-2 focus:ring-gold/50 focus:ring-offset-2 focus:ring-offset-darkBrown
+           before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-r 
+           before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-200%]
+           hover:before:translate-x-[200%] before:transition-transform before:duration-1000;
+  }
+  
+  .btn-secondary {
+    @apply relative flex items-center justify-center gap-2 px-8 py-3 
+           border-2 border-saffron text-saffron font-bold rounded-lg
+           bg-darkBrown/50 backdrop-blur-sm overflow-hidden
+           hover:border-gold hover:text-gold hover:bg-darkBrown/70 
+           transition-all duration-500
+           transform hover:-translate-y-0.5 hover:scale-105
+           focus:outline-none focus:ring-2 focus:ring-gold/50
+           before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-r 
+           before:from-transparent before:via-saffron/20 before:to-transparent before:translate-x-[-200%]
+           hover:before:translate-x-[200%] before:transition-transform before:duration-1000;
+  }
+
+  .sacred-oath-btn {
+    @apply relative overflow-hidden;
+  }
+
+  .flame-effect {
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(45deg, theme('colors.saffron'), theme('colors.gold'));
+    filter: blur(15px);
+  }
+
+  .sacred-oath-btn:hover .flame-effect {
+    @apply opacity-50;
+  }
+
+  .bg-parchment {
+    background-image: url('https://images.unsplash.com/photo-1524364824685-b022f5a4b4c1?q=80&w=2000');
+    background-size: cover;
+    background-position: center;
+    @apply bg-blend-overlay bg-darkBrown/90 backdrop-blur-sm;
+  }
+
+  .ancient-text {
+    font-family: 'Cinzel Decorative', serif;
+    text-shadow: 0 0 10px theme('colors.gold');
+  }
+}
+
+@keyframes horse-gallop {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-10px) rotate(-2deg); }
+  75% { transform: translateY(-5px) rotate(2deg); }
+}
+
+@keyframes leg-movement {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(30deg); }
+}
+
+@keyframes warrior-sway {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes spear-thrust {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-15deg); }
+}
+
+@keyframes dust-float {
+  0% { 
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  50% { 
+    transform: translateY(-20px) scale(1.5);
+    opacity: 0.5;
+  }
+  100% { 
+    transform: translateY(-40px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes title-char-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) rotateX(-90deg);
+    text-shadow: 0 0 0 theme('colors.saffron');
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(25px) rotateX(-45deg);
+    text-shadow: 0 0 20px theme('colors.gold');
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+    text-shadow: 0 0 40px theme('colors.saffron');
+  }
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-20px) scale(2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-40px) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes glow-path {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+}
+
+.animate-gallop {
+  animation: horse-gallop 2s infinite;
+}
+
+.animate-front-leg {
+  animation: leg-movement 1s infinite;
+  transform-origin: top;
+}
+
+.animate-back-leg {
+  animation: leg-movement 1s infinite reverse;
+  transform-origin: top;
+}
+
+.animate-warrior {
+  animation: warrior-sway 2s infinite;
+}
+
+.animate-spear {
+  animation: spear-thrust 2s infinite;
+  transform-origin: left;
+}
+
+.animate-dust {
+  animation: dust-float 2s infinite;
+}
+
+.chakravyuh-title {
+  position: relative;
+}
+
+.title-char {
+  opacity: 0;
+  animation: title-char-reveal 1s forwards;
+  display: inline-block;
+}
+
+.animate-particle {
+  animation: particle-float 3s infinite;
+}
+
+.animate-glow-path {
+  stroke-dasharray: 100;
+  animation: glow-path 3s infinite;
+}
+
+.animate-glow-path-reverse {
+  stroke-dasharray: 100;
+  animation: glow-path 3s infinite reverse;
+}
+
+@keyframes chakraBorderPulse {
+  0% {
+    transform: scale(0.1) rotate(0deg);
+    opacity: 0.8;
+    border-color: theme('colors.saffron');
+  }
+  50% {
+    opacity: 1;
+    border-color: theme('colors.gold');
+  }
+  100% {
+    transform: scale(2) rotate(360deg);
+    opacity: 0;
+    border-color: theme('colors.saffron');
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    text-shadow: 0 0 20px theme('colors.saffron'), 0 0 40px theme('colors.gold');
+  }
+  50% {
+    text-shadow: 0 0 40px theme('colors.gold'), 0 0 80px theme('colors.saffron');
+  }
+}
+
+@keyframes chakra-char {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) rotateX(-90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+@keyframes glow-line {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scaleX(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes gallop {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes sword-clash {
+  0%, 100% {
+    transform: rotate(-45deg) scale(1);
+  }
+  50% {
+    transform: rotate(-45deg) scale(1.1);
+  }
+}
+
+.animate-glow {
+  animation: glow 3s infinite;
+}
+
+.animate-chakra-char {
+  animation: chakra-char 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-glow-line {
+  animation: glow-line 2s infinite;
+}
+
+.animate-gallop {
+  animation: gallop 1s infinite;
+}
+
+.animate-sword-clash {
+  animation: sword-clash 1s infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 30s linear infinite;
+}
+
+@keyframes war-drums {
+  0%, 100% {
+    transform: scale(1) rotate(-45deg);
+    filter: drop-shadow(0 0 5px theme('colors.saffron'));
+  }
+  50% {
+    transform: scale(1.2) rotate(-30deg);
+    filter: drop-shadow(0 0 15px theme('colors.gold'));
+  }
+}
+
+.war-drums {
+  animation: war-drums 2s ease-in-out infinite;
+}
+
+.bg-mythological {
+  background-image: radial-gradient(circle at center, theme('colors.darkBrown'), theme('colors.darkBrown'), #000000);
+}
+
+@keyframes dust-cloud-float {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(var(--tx), var(--ty)) scale(1.5);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(calc(var(--tx) * 2), calc(var(--ty) * 2)) scale(1);
+    opacity: 0;
+  }
+}
+
+.dust-cloud {
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, theme('colors.saffron/30'), transparent);
+  border-radius: 50%;
+  animation: dust-cloud-float 4s infinite;
+  --tx: calc(100px * (random(100) / 100 - 0.5));
+  --ty: calc(100px * (random(100) / 100 - 0.5));
+}
+
+@keyframes flying-arrow {
+  0% {
+    transform: translate(0, 0) rotate(45deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100vw, -100vh) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+.flying-arrow {
+  width: 20px;
+  height: 2px;
+  background: theme('colors.gold');
+  position: absolute;
+  animation: flying-arrow 3s linear infinite;
+}
+
+.flying-arrow::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -4px;
+  border-left: 8px solid theme('colors.gold');
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+.scroll-container {
+  perspective: 1000px;
+}
+
+.scroll-container > div {
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+.scroll-container > div:hover {
+  transform: translateZ(20px);
+}
+
+@keyframes weapon-shine {
+  0% {
+    filter: drop-shadow(0 0 2px theme('colors.saffron'));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px theme('colors.gold'));
+  }
+  100% {
+    filter: drop-shadow(0 0 2px theme('colors.saffron'));
+  }
+}
+
+.btn-primary:hover svg,
+.btn-secondary:hover svg {
+  animation: weapon-shine 1.5s infinite;
+}
+
+@keyframes chakraParticle {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(2) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes battleDust {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(var(--dust-x, 20px), var(--dust-y, -20px)) scale(2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(var(--dust-x-end, 40px), var(--dust-y-end, -40px)) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes dice-roll {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  25% {
+    transform: rotateX(180deg) rotateY(90deg) rotateZ(45deg);
+  }
+  50% {
+    transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg);
+  }
+  75% {
+    transform: rotateX(540deg) rotateY(270deg) rotateZ(135deg);
+  }
+  100% {
+    transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg);
+  }
+}
+
+.animate-dice-roll {
+  animation: dice-roll 3s infinite ease-in-out;
+  transform-style: preserve-3d;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+@keyframes complex-roll {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  20% {
+    transform: rotateX(180deg) rotateY(90deg) rotateZ(45deg);
+  }
+  40% {
+    transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg);
+  }
+  60% {
+    transform: rotateX(540deg) rotateY(270deg) rotateZ(135deg);
+  }
+  80% {
+    transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg);
+  }
+  100% {
+    transform: rotateX(1080deg) rotateY(720deg) rotateZ(360deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.05);
+  }
+}
+
+.animate-complex-roll {
+  animation: complex-roll 8s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.animate-float {
+  animation: float 3s infinite ease-in-out;
+}
+
+.filter {
+  &.drop-shadow-glow {
+    filter: drop-shadow(0 0 5px rgba(255, 153, 51, 0.5));
+  }
+}
